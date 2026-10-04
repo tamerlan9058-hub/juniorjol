@@ -185,5 +185,22 @@
     "added": "2026-10-04",
     "expires": "2026-11-18",
     "featured_until": null
+  },
+  {
+    "id": "jj-16",
+    "issue": 16,
+    "company": "ТОО Талисман качества",
+    "title": "Software QA Engineer/Intern (AI-Powered)",
+    "type": "Стажировка",
+    "direction": "QA",
+    "city": "Алматы",
+    "format": "Офис",
+    "paid": "Не указано",
+    "salary": "",
+    "url": "https://hh.kz/vacancy/137258850",
+    "deadline": null,
+    "added": "2026-10-04",
+    "expires": "2026-11-18",
+    "featured_until": null
   }
 ]
