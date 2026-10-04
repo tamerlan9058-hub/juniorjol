@@ -23,6 +23,23 @@
 ⭐ — Featured: работодатель продвигает вакансию. «—» в дедлайне — вакансия висит 45 дней или до закрытия набора.
 <!-- LISTINGS:END -->
 
+## Регулярные программы стажировок
+
+Крупные компании набирают стажёров по расписанию. Здесь — когда обычно открывается набор; как только он стартует, программа появится в таблице выше.
+
+| Программа | Направления | Когда обычно набор | Где следить |
+|---|---|---|---|
+| **Kcell Winter Camp / Summer Camp** | Backend, Frontend, Data, кибербезопасность, системный анализ, UX/UI | Зимняя — заявки до ~20 декабря; летняя — весной | [internship.kcell.kz](https://internship.kcell.kz/) |
+| **Kolesa Academy** (Kolesa Group) | QA, data-аналитика, product, UX-исследования | Весна – начало лета, оплачиваемая, Алматы | [kolesa.group/education/academy](https://kolesa.group/education/academy) |
+| **Цифровое лето** (Самрук-Қазына) | IT и другие направления в компаниях фонда | Весна, для 3–4 курса и магистрантов | [qsamruk.kz/vacancy](https://qsamruk.kz/vacancy) |
+| **EPAM Campus** | Java, Python, .NET, Cloud & DevOps, Data | Несколько потоков в год, онлайн, бесплатно | [campus.epam.com](https://campus.epam.com/) |
+| **Kaspi Lab** | Data Science, мобильная разработка | Для 3–4 курса и магистрантов | [lab.kaspi.kz](https://lab.kaspi.kz/) |
+| **Halyk Start** (Halyk Bank) | Разработка | Для 3 курса и выпускников IT | Сайт и соцсети Halyk Bank |
+| **Beeline Казахстан** | IT, аналитика, продукт | Несколько раз в год | [people.beeline.kz](https://people.beeline.kz/ITBigData) |
+| **Andersen Trainee** | JavaScript, QA, бизнес-анализ, UI/UX | Постоянно, удалённо | [people.andersenlab.com/trainee](https://people.andersenlab.com/trainee) |
+
+Знаете программу, которой здесь нет? [Добавьте её как вакансию](../../issues/new?template=new-listing.yml), когда откроется набор.
+
 ## Студентам
 
 - Всё бесплатно и без регистрации: нажмите **Откликнуться** — откроется страница вакансии у работодателя.
