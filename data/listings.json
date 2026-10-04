@@ -66,5 +66,22 @@
     "added": "2026-10-04",
     "expires": "2026-11-18",
     "featured_until": null
+  },
+  {
+    "id": "jj-9",
+    "issue": 9,
+    "company": "Andersen",
+    "title": "Quality Assurance Trainee Program",
+    "type": "Стажировка",
+    "direction": "QA",
+    "city": "Алматы",
+    "format": "Гибрид",
+    "paid": "Не указано",
+    "salary": "",
+    "url": "https://hh.kz/vacancy/137250271",
+    "deadline": null,
+    "added": "2026-10-04",
+    "expires": "2026-11-18",
+    "featured_until": null
   }
 ]
