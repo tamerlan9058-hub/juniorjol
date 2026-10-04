@@ -14,10 +14,11 @@
 ## Вакансии
 
 <!-- LISTINGS:START -->
-**Активных: 10** · стажировок: 9 · junior: 1 · part-time: 0 · обновлено 4 октября 2026 · [JSON](data/listings.json) · [RSS](data/feed.xml)
+**Активных: 11** · стажировок: 9 · junior: 2 · part-time: 0 · обновлено 4 октября 2026 · [JSON](data/listings.json) · [RSS](data/feed.xml)
 
 |   | Компания | Позиция | Тип | Где | Оплата | Дедлайн |   |
 |---|---|---|---|---|---|---|---|
+|  | **Kaspi.kz** | Продуктовый аналитик (Junior) | Junior · Data / ML | Алматы · Офис | ? | — | [Откликнуться](https://hh.kz/vacancy/137431488) |
 |  | **Playrix** | Junior Product Manager | Junior · Product / Project | Удалённо | ? | — | [Откликнуться](https://hh.kz/vacancy/137781386) |
 |  | **Andersen** | JavaScript Trainee | Стажировка · Frontend | Алматы · Гибрид | 💰 270 000 ₸ за месяц, до вычета налогов | — | [Откликнуться](https://hh.kz/vacancy/137112307) |
 |  | **Andersen** | JavaScript Trainee | Стажировка · Frontend | Астана · Гибрид | 💰 270 000 ₸ за месяц, до вычета налогов | — | [Откликнуться](https://hh.kz/vacancy/137118391) |

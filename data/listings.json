@@ -168,5 +168,22 @@
     "added": "2026-10-04",
     "expires": "2026-11-18",
     "featured_until": null
+  },
+  {
+    "id": "jj-15",
+    "issue": 15,
+    "company": "Kaspi.kz",
+    "title": "Продуктовый аналитик (Junior)",
+    "type": "Junior-вакансия",
+    "direction": "Data / ML",
+    "city": "Алматы",
+    "format": "Офис",
+    "paid": "Не указано",
+    "salary": "",
+    "url": "https://hh.kz/vacancy/137431488",
+    "deadline": null,
+    "added": "2026-10-04",
+    "expires": "2026-11-18",
+    "featured_until": null
   }
 ]
