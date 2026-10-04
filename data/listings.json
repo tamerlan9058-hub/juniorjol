@@ -134,5 +134,22 @@
     "added": "2026-10-04",
     "expires": "2026-11-18",
     "featured_until": null
+  },
+  {
+    "id": "jj-13",
+    "issue": 13,
+    "company": "Andersen",
+    "title": "JavaScript Trainee",
+    "type": "Стажировка",
+    "direction": "Frontend",
+    "city": "Алматы",
+    "format": "Гибрид",
+    "paid": "Оплачиваемая",
+    "salary": "270 000 ₸ за месяц, до вычета налогов",
+    "url": "https://hh.kz/vacancy/137112307",
+    "deadline": null,
+    "added": "2026-10-04",
+    "expires": "2026-11-18",
+    "featured_until": null
   }
 ]
