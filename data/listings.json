@@ -15,5 +15,22 @@
     "added": "2026-10-04",
     "expires": "2026-11-18",
     "featured_until": null
+  },
+  {
+    "id": "jj-5",
+    "issue": 5,
+    "company": "Andersen",
+    "title": ".NET Trainee",
+    "type": "Стажировка",
+    "direction": "Backend",
+    "city": "Астана",
+    "format": "Офис",
+    "paid": "Оплачиваемая",
+    "salary": "до 270 000 ₸ за месяц, до вычета налогов",
+    "url": "https://hh.kz/vacancy/138021943",
+    "deadline": null,
+    "added": "2026-10-04",
+    "expires": "2026-11-18",
+    "featured_until": null
   }
 ]
