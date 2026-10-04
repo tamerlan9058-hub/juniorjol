@@ -39,10 +39,7 @@ jobs:
           ref: ${{ inputs.ref }}
 
       - name: Собрать сайт
-        run: |
-          mkdir -p _site
-          cp -r site/. _site/
-          cp data/listings.json data/feed.xml data/meta.json _site/
+        run: python3 scripts/build_site.py _site
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
