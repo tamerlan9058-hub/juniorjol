@@ -1,0 +1,18 @@
+{
+  "brand": "JuniorJol",
+  "tagline": "Стажировки и junior-вакансии в IT Казахстана",
+  "tagline_kz": "Қазақстандағы IT-тағылымдамалар мен junior-вакансиялар",
+  "repo": "tamerlan9058-hub/testassets",
+  "contact_email": "",
+  "telegram_channel": "",
+  "kaspi_pay_link": "",
+  "default_ttl_days": 45,
+  "featured_days": 30,
+  "launch_promo": true,
+  "currency": "₸",
+  "prices": {
+    "featured": 9900,
+    "hiring_pack": 24900,
+    "sponsor_month": 49900
+  }
+}

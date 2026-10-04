@@ -1,0 +1,48 @@
+name: Проверка заявки
+
+# Бот проверяет новую заявку и отвечает в issue: «всё верно» или «что поправить».
+# Текст заявки не подставляется в shell: скрипт читает его из файла события.
+on:
+  issues:
+    types: [opened, edited, reopened, labeled]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: intake-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  intake:
+    if: >-
+      github.event.issue.state == 'open' &&
+      contains(github.event.issue.labels.*.name, 'new-listing') &&
+      (github.event.action != 'labeled' || github.event.label.name == 'new-listing')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: board
+        run: python3 scripts/board.py intake
+
+      - name: Комментарий бота и метки
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          LABEL: ${{ steps.board.outputs.label }}
+        run: |
+          gh label create ready-for-review --color 0e8a16 --description "Заявка заполнена, ждёт модератора" --force
+          gh label create needs-fix --color d93f0b --description "Заявку нужно поправить" --force
+          id=$(gh api "repos/$GH_REPO/issues/$NUMBER/comments" --paginate \
+            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("<!-- juniorjol-bot -->"))) | .id' | tail -n 1)
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$GH_REPO/issues/comments/$id" -F body=@out/comment.md > /dev/null
+          else
+            gh issue comment "$NUMBER" --body-file out/comment.md
+          fi
+          other=needs-fix
+          if [ "$LABEL" = needs-fix ]; then other=ready-for-review; fi
+          gh issue edit "$NUMBER" --add-label "$LABEL" --remove-label "$other"

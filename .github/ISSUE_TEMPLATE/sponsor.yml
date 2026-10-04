@@ -1,0 +1,39 @@
+name: "🤝 Реклама и спонсорство"
+description: Спонсор месяца, пакет «Набор стажёров» или партнёрство с вузом / школой программирования
+title: "[Партнёрство] "
+labels: ["sponsor-request"]
+body:
+  - type: markdown
+    attributes:
+      value: Тарифы — в файле docs/employers.md. Мы ответим в этом issue в течение 2 рабочих дней.
+  - type: input
+    id: org
+    attributes:
+      label: Организация
+    validations:
+      required: true
+  - type: dropdown
+    id: package
+    attributes:
+      label: Что интересует
+      options:
+        - Спонсор месяца
+        - Пакет «Набор стажёров»
+        - Партнёрство с вузом / карьерным центром
+        - Другое
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Детали
+      description: Что хотите продвигать, сроки, пожелания.
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Рабочий email для связи
+      description: Будет виден публично. Используйте корпоративный адрес, не личный телефон.
+    validations:
+      required: true

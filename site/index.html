@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JuniorJol — стажировки и junior-вакансии в IT Казахстана</title>
+<meta name="description" content="Свежие стажировки и junior-вакансии в IT Казахстана: Алматы, Астана, удалённо. Бесплатно для студентов.">
+<link rel="alternate" type="application/rss+xml" title="JuniorJol" href="feed.xml">
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --text: #16181d; --muted: #5d6470; --line: #e3e6eb;
+    --accent: #0b6bcb; --accent-soft: #e6f0fb; --on-accent: #ffffff; --star: #b25e00; --star-soft: #fff4e5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101216; --card: #181b21; --text: #eceef2; --muted: #a0a7b4; --line: #2a2f38;
+      --accent: #5aa7f0; --accent-soft: #15283c; --on-accent: #0b1a2a; --star: #ffb35c; --star-soft: #2d2213;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+  header { padding: 40px 0 24px; }
+  h1 { margin: 0 0 6px; font-size: clamp(28px, 5vw, 40px); letter-spacing: -0.02em; }
+  .lead { margin: 0; color: var(--muted); font-size: 18px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .btn { display: inline-block; padding: 10px 16px; border-radius: 10px; text-decoration: none;
+         font-weight: 600; border: 1px solid var(--line); background: var(--card); color: var(--text); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .filters { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 8px; margin: 8px 0 16px; }
+  @media (max-width: 720px) { .filters { grid-template-columns: 1fr 1fr; } .filters input, #direction { grid-column: 1 / -1; } }
+  input, select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);
+                  background: var(--card); color: var(--text); font: inherit; }
+  .count { color: var(--muted); margin: 0 0 12px; font-size: 14px; }
+  .list { display: grid; gap: 10px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px;
+          display: grid; grid-template-columns: 1fr auto; gap: 8px 16px; align-items: center; }
+  .card.featured { border-color: var(--star); background: linear-gradient(0deg, var(--card), var(--star-soft)); }
+  .card h2 { margin: 0; font-size: 18px; }
+  .company { color: var(--muted); font-weight: 600; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; grid-column: 1; grid-row: 2; }
+  .tag { font-size: 13px; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--text); }
+  .tag.star { background: var(--star-soft); color: var(--star); font-weight: 700; }
+  .apply { grid-row: 1 / span 2; grid-column: 2; text-align: center; }
+  @media (max-width: 560px) { .card { grid-template-columns: 1fr; } .tags, .apply { grid-row: auto; grid-column: 1; } }
+  .empty { text-align: center; padding: 40px 16px; color: var(--muted); background: var(--card);
+           border: 1px dashed var(--line); border-radius: 14px; }
+  footer { color: var(--muted); font-size: 14px; padding: 32px 0 48px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>JuniorJol 🇰🇿</h1>
+    <p class="lead">Стажировки и junior-вакансии в IT Казахстана — свежие, проверенные, с дедлайнами.</p>
+    <div class="cta">
+      <a class="btn primary" id="post" href="#">Разместить вакансию бесплатно</a>
+      <a class="btn" id="tg" href="#" hidden>Telegram-канал</a>
+      <a class="btn" href="feed.xml">RSS</a>
+    </div>
+  </header>
+
+  <div class="filters">
+    <input id="q" type="search" placeholder="Поиск: компания, позиция, Python…" aria-label="Поиск">
+    <select id="city" aria-label="Город"><option value="">Город</option></select>
+    <select id="type" aria-label="Тип"><option value="">Тип</option></select>
+    <select id="direction" aria-label="Направление"><option value="">Направление</option></select>
+  </div>
+  <p class="count" id="count">Загрузка…</p>
+  <div class="list" id="list"></div>
+
+  <footer>
+    Данные: <a href="listings.json">listings.json</a> (CC BY 4.0) · <a id="repo" href="#">Исходный код на GitHub</a> ·
+    <span id="updated"></span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var state = { items: [], repo: "" };
+  var $ = function (id) { return document.getElementById(id); };
+
+  function el(tag, cls, text) {
+    var node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function today() { return new Date(Date.now() + 5 * 3600 * 1000).toISOString().slice(0, 10); }
+  function featured(i) { return !!i.featured_until && i.featured_until >= today(); }
+  function fmt(iso) { var p = iso.split("-"); return p[2] + "." + p[1] + "." + p[0]; }
+  function where(i) { return i.city === "Любой (удалённо)" ? "Удалённо" : i.city + " · " + i.format; }
+  function safeUrl(u) { return /^https:\/\//.test(u) ? u : "#"; }
+
+  function repoUrl(meta) {
+    if (meta && meta.repo) return "https://github.com/" + meta.repo;
+    var owner = location.hostname.split(".")[0];
+    var name = location.pathname.split("/").filter(Boolean)[0];
+    return name ? "https://github.com/" + owner + "/" + name : "https://github.com/";
+  }
+
+  function fillSelect(id, values) {
+    var select = $(id);
+    values.forEach(function (v) { var o = el("option", null, v); o.value = v; select.appendChild(o); });
+  }
+
+  function card(i) {
+    var c = el("article", "card" + (featured(i) ? " featured" : ""));
+    var head = el("div");
+    head.appendChild(el("h2", null, i.title));
+    head.appendChild(el("div", "company", i.company));
+    c.appendChild(head);
+
+    var tags = el("div", "tags");
+    if (featured(i)) tags.appendChild(el("span", "tag star", "⭐ Featured"));
+    [i.type, i.direction, where(i),
+     i.paid + (i.salary ? " · " + i.salary : ""),
+     i.deadline ? "до " + fmt(i.deadline) : null]
+      .filter(Boolean).forEach(function (t) { tags.appendChild(el("span", "tag", t)); });
+    c.appendChild(tags);
+
+    var a = el("a", "btn primary apply", "Откликнуться");
+    a.href = safeUrl(i.url);
+    a.target = "_blank";
+    a.rel = "noopener nofollow";
+    c.appendChild(a);
+    return c;
+  }
+
+  function render() {
+    var q = $("q").value.trim().toLowerCase();
+    var f = { city: $("city").value, type: $("type").value, direction: $("direction").value };
+    var shown = state.items.filter(function (i) {
+      if (f.city && i.city !== f.city) return false;
+      if (f.type && i.type !== f.type) return false;
+      if (f.direction && i.direction !== f.direction) return false;
+      if (q && (i.company + " " + i.title + " " + i.direction).toLowerCase().indexOf(q) === -1) return false;
+      return true;
+    });
+    var list = $("list");
+    list.textContent = "";
+    $("count").textContent = "Найдено: " + shown.length + " из " + state.items.length;
+    if (!shown.length) {
+      var empty = el("div", "empty", state.items.length
+        ? "По этим фильтрам ничего нет — попробуйте сбросить их."
+        : "Сейчас нет активных вакансий. Загляните позже или разместите первую!");
+      list.appendChild(empty);
+      return;
+    }
+    shown.forEach(function (i) { list.appendChild(card(i)); });
+  }
+
+  function uniq(key) {
+    var seen = {};
+    return state.items.map(function (i) { return i[key]; })
+      .filter(function (v) { if (!v || seen[v]) return false; seen[v] = true; return true; }).sort();
+  }
+
+  Promise.all([
+    fetch("listings.json", { cache: "no-store" }).then(function (r) { return r.json(); }),
+    fetch("meta.json", { cache: "no-store" }).then(function (r) { return r.json(); }).catch(function () { return {}; })
+  ]).then(function (res) {
+    var meta = res[1] || {};
+    state.repo = repoUrl(meta);
+    state.items = res[0].slice().sort(function (a, b) {
+      var fa = featured(a) ? 0 : 1, fb = featured(b) ? 0 : 1;
+      if (fa !== fb) return fa - fb;
+      return a.added < b.added ? 1 : a.added > b.added ? -1 : b.issue - a.issue;
+    });
+    $("post").href = state.repo + "/issues/new?template=new-listing.yml";
+    $("repo").href = state.repo;
+    if (meta.telegram_channel) {
+      $("tg").href = "https://t.me/" + meta.telegram_channel.replace(/^@/, "");
+      $("tg").hidden = false;
+    }
+    if (meta.updated) $("updated").textContent = "Обновлено " + fmt(meta.updated);
+    fillSelect("city", uniq("city"));
+    fillSelect("type", uniq("type"));
+    fillSelect("direction", uniq("direction"));
+    ["q", "city", "type", "direction"].forEach(function (id) { $(id).addEventListener("input", render); });
+    render();
+  }).catch(function () {
+    $("count").textContent = "Не удалось загрузить вакансии. Обновите страницу.";
+  });
+})();
+</script>
+</body>
+</html>

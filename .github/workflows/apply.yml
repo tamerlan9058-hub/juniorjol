@@ -1,0 +1,95 @@
+name: Публикация
+
+# Модератор ставит метку:
+#   approved — опубликовать вакансию (или снять, если это заявка «Закрыть вакансию»);
+#   paid     — оплата получена, включить Featured.
+# Срабатывает только на метки от владельца репозитория или логинов из переменной MAINTAINERS
+# (JSON-массив, например ["login1","login2"]).
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  apply:
+    if: >-
+      (github.event.label.name == 'approved' || github.event.label.name == 'paid') &&
+      (github.event.sender.login == github.repository_owner ||
+       contains(fromJSON(vars.MAINTAINERS || '[]'), github.event.sender.login))
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.board.outputs.changed }}
+      sha: ${{ steps.board.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      # Несколько модераторских меток подряд запускают параллельные прогоны. Вместо очереди
+      # (GitHub отменяет ожидающие прогоны в concurrency-группе) — повтор с перечитыванием данных.
+      - id: board
+        name: Применить и сохранить
+        env:
+          NUMBER: ${{ github.event.issue.number }}
+          BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          out="$RUNNER_TEMP/board-output"
+          for attempt in 1 2 3 4 5; do
+            git fetch -q origin "$BRANCH"
+            git reset -q --hard "origin/$BRANCH"
+            : > "$out"
+            GITHUB_OUTPUT="$out" python3 scripts/board.py apply
+            if ! grep -q '^changed=true' "$out"; then break; fi
+            status=$(sed -n 's/^status=//p' "$out")
+            git add data README.md docs/employers.md
+            git commit -q -m "board: $status #$NUMBER"
+            if git push -q origin "HEAD:$BRANCH"; then
+              echo "sha=$(git rev-parse HEAD)" >> "$out"
+              break
+            fi
+            if [ "$attempt" = 5 ]; then exit 1; fi
+            echo "Данные изменились параллельно, повтор через $((attempt * 3)) с"
+            sleep $((attempt * 3))
+          done
+          cat "$out" >> "$GITHUB_OUTPUT"
+
+      - name: Ответ в заявке
+        if: steps.board.outputs.status != 'noop'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          STATUS: ${{ steps.board.outputs.status }}
+          CLOSE: ${{ steps.board.outputs.close }}
+        run: |
+          gh issue comment "$NUMBER" --body-file out/comment.md
+          if [ "$STATUS" = published ]; then
+            gh label create published --color 1d76db --description "Вакансия опубликована" --force
+            gh issue edit "$NUMBER" --add-label published --remove-label ready-for-review
+          fi
+          if [ "$CLOSE" = true ]; then gh issue close "$NUMBER" --reason completed; fi
+
+      - name: Пост в Telegram
+        if: steps.board.outputs.telegram != ''
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ vars.TELEGRAM_CHAT_ID }}
+          IDS: ${{ steps.board.outputs.telegram }}
+        run: python3 scripts/board.py telegram --ids "$IDS"
+
+  pages:
+    needs: apply
+    if: needs.apply.outputs.changed == 'true' && vars.PAGES_ENABLED == 'true'
+    uses: ./.github/workflows/pages.yml
+    with:
+      ref: ${{ needs.apply.outputs.sha }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

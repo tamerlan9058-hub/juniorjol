@@ -1,0 +1,25 @@
+name: Настройка меток
+
+# Запустить один раз после того, как репозиторий стал публичным: Actions → «Настройка меток» → Run workflow.
+on:
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  labels:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - run: |
+          gh label create new-listing      --color 5319e7 --description "Заявка на вакансию" --force
+          gh label create close-listing    --color 6a737d --description "Заявка на снятие вакансии" --force
+          gh label create sponsor-request  --color fbca04 --description "Реклама и партнёрство" --force
+          gh label create ready-for-review --color 0e8a16 --description "Заявка заполнена, ждёт модератора" --force
+          gh label create needs-fix        --color d93f0b --description "Заявку нужно поправить" --force
+          gh label create approved         --color 0052cc --description "Модератор: опубликовать / закрыть" --force
+          gh label create paid             --color f9d0c4 --description "Модератор: оплата получена, включить Featured" --force
+          gh label create published        --color 1d76db --description "Вакансия опубликована" --force

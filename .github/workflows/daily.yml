@@ -1,0 +1,68 @@
+name: Ежедневное обслуживание
+
+# Каждое утро снимает просроченные вакансии и закончившееся продвижение,
+# по понедельникам отправляет дайджест недели в Telegram.
+on:
+  schedule:
+    - cron: "17 0 * * *" # 05:17 по Астане (UTC+5)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily
+
+jobs:
+  maintain:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+      sha: ${{ steps.commit.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: commit
+        name: Снять просроченное и сохранить
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          branch=$(git rev-parse --abbrev-ref HEAD)
+          for attempt in 1 2 3 4 5; do
+            git fetch -q origin "$branch"
+            git reset -q --hard "origin/$branch"
+            python3 scripts/board.py expire
+            if [ -z "$(git status --porcelain data README.md docs)" ]; then
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git add data README.md docs/employers.md
+            git commit -q -m "board: ежедневное обновление"
+            if git push -q origin "HEAD:$branch"; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            if [ "$attempt" = 5 ]; then exit 1; fi
+            sleep $((attempt * 3))
+          done
+
+      - name: Дайджест недели в Telegram
+        if: github.event_name == 'schedule'
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ vars.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ "$(TZ=Asia/Almaty date +%u)" = 1 ]; then python3 scripts/board.py telegram-digest; fi
+
+  pages:
+    needs: maintain
+    if: needs.maintain.outputs.changed == 'true' && vars.PAGES_ENABLED == 'true'
+    uses: ./.github/workflows/pages.yml
+    with:
+      ref: ${{ needs.maintain.outputs.sha }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

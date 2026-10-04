@@ -1,0 +1,24 @@
+name: "🔒 Закрыть вакансию"
+description: Набор закрыт или вакансия больше не актуальна
+title: "[Закрыть] "
+labels: ["close-listing"]
+body:
+  - type: input
+    id: target
+    attributes:
+      label: Номер заявки или ссылка на вакансию
+      description: Номер issue, в котором публиковалась вакансия (например 12), или ссылка из таблицы.
+      placeholder: "12"
+    validations:
+      required: true
+  - type: dropdown
+    id: reason
+    attributes:
+      label: Причина
+      options:
+        - Набор закрыт
+        - Вакансия неактуальна
+        - Ошибка в объявлении
+        - Другое
+    validations:
+      required: true

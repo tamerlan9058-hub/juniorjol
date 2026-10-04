@@ -1,0 +1,52 @@
+name: Сайт
+
+# Публикует site/ и данные на GitHub Pages. Включается переменной PAGES_ENABLED=true
+# (Settings → Secrets and variables → Actions → Variables) и источником Pages «GitHub Actions».
+on:
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: false
+        default: ""
+  workflow_dispatch:
+  push:
+    paths:
+      - "site/**"
+      - "data/**"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: >-
+      vars.PAGES_ENABLED == 'true' &&
+      (github.event_name != 'push' || github.ref_name == github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Собрать сайт
+        run: |
+          mkdir -p _site
+          cp -r site/. _site/
+          cp data/listings.json data/feed.xml data/meta.json _site/
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4

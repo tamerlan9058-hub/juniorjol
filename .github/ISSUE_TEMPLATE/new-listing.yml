@@ -1,0 +1,124 @@
+name: "📌 Новая вакансия / стажировка"
+description: Бесплатно разместить стажировку или junior-вакансию в IT в Казахстане
+title: "[Вакансия] "
+labels: ["new-listing"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Размещение **бесплатное**. Бот сразу проверит заявку и покажет, как она будет выглядеть, а модератор опубликует её в течение 1–2 рабочих дней.
+        Все поля ниже будут видны публично — не указывайте личные телефоны.
+  - type: input
+    id: company
+    attributes:
+      label: Компания
+      placeholder: "Например: ТОО «Пример Технолоджи»"
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Позиция
+      placeholder: "Например: Стажёр Python-разработчик"
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Тип
+      options:
+        - Стажировка
+        - Junior-вакансия
+        - Part-time для студентов
+    validations:
+      required: true
+  - type: dropdown
+    id: direction
+    attributes:
+      label: Направление
+      options:
+        - Backend
+        - Frontend
+        - Fullstack
+        - Mobile
+        - QA
+        - Data / ML
+        - DevOps / SRE
+        - UI/UX дизайн
+        - Product / Project
+        - Другое
+    validations:
+      required: true
+  - type: dropdown
+    id: city
+    attributes:
+      label: Город
+      options:
+        - Алматы
+        - Астана
+        - Шымкент
+        - Караганда
+        - Другой город
+        - Любой (удалённо)
+    validations:
+      required: true
+  - type: dropdown
+    id: format
+    attributes:
+      label: Формат работы
+      options:
+        - Офис
+        - Гибрид
+        - Удалённо
+    validations:
+      required: true
+  - type: dropdown
+    id: paid
+    attributes:
+      label: Оплата
+      options:
+        - Оплачиваемая
+        - Неоплачиваемая
+        - Не указано
+    validations:
+      required: true
+  - type: input
+    id: salary
+    attributes:
+      label: Зарплата / стипендия
+      description: Необязательно, но вакансии с зарплатой получают больше откликов.
+      placeholder: "Например: 150 000–250 000 ₸"
+  - type: input
+    id: url
+    attributes:
+      label: Ссылка на вакансию
+      description: Страница на сайте компании, hh.kz, LinkedIn или форма отклика. Только https://.
+      placeholder: "https://..."
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Дедлайн отклика
+      description: Формат ГГГГ-ММ-ДД. Если дедлайна нет — оставьте пустым, вакансия провисит 45 дней.
+      placeholder: "2026-11-30"
+  - type: dropdown
+    id: promotion
+    attributes:
+      label: Продвижение
+      description: "Featured — вакансия закрепляется вверху списка и в Telegram. Тарифы: docs/employers.md"
+      options:
+        - Бесплатное размещение
+        - Featured — закрепить вверху на 30 дней (платно)
+      default: 0
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Подтверждение
+      options:
+        - label: Вакансия реальная, ссылка ведёт на официальный источник
+          required: true
+        - label: В объявлении нет требований к полу, возрасту, внешности и т. п.
+          required: true
