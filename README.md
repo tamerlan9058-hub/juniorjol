@@ -14,10 +14,11 @@
 ## Вакансии
 
 <!-- LISTINGS:START -->
-**Активных: 6** · стажировок: 6 · junior: 0 · part-time: 0 · обновлено 4 октября 2026 · [JSON](data/listings.json) · [RSS](data/feed.xml)
+**Активных: 7** · стажировок: 7 · junior: 0 · part-time: 0 · обновлено 4 октября 2026 · [JSON](data/listings.json) · [RSS](data/feed.xml)
 
 |   | Компания | Позиция | Тип | Где | Оплата | Дедлайн |   |
 |---|---|---|---|---|---|---|---|
+|  | **Andersen** | Full Stack Test Engineer Trainee | Стажировка · QA | Астана · Офис | 💰 300 000 ₸ за месяц, до вычета налогов | — | [Откликнуться](https://hh.kz/vacancy/137119990) |
 |  | **Andersen** | .NET Trainee | Стажировка · Backend | Алматы · Офис | 💰 до 270 000 ₸ за месяц, до вычета налогов | — | [Откликнуться](https://hh.kz/vacancy/137120935) |
 |  | **Andersen** | Quality Assurance Trainee Program | Стажировка · QA | Алматы · Гибрид | ? | — | [Откликнуться](https://hh.kz/vacancy/137250271) |
 |  | **Andersen** | Full Stack Test Engineer Trainee | Стажировка · QA | Алматы · Офис | 💰 до 300 000 ₸ за месяц, до вычета налогов | — | [Откликнуться](https://hh.kz/vacancy/137531419) |
