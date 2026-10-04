@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "jj-4",
+    "issue": 4,
+    "company": "Andersen",
+    "title": "Trainee: JavaScript, QA, бизнес-анализ, UI/UX",
+    "type": "Стажировка",
+    "direction": "Другое",
+    "city": "Любой (удалённо)",
+    "format": "Удалённо",
+    "paid": "Неоплачиваемая",
+    "salary": "",
+    "url": "https://people.andersenlab.com/trainee",
+    "deadline": null,
+    "added": "2026-10-04",
+    "expires": "2026-11-18",
+    "featured_until": null
+  }
+]

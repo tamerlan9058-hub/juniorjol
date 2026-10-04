@@ -14,9 +14,13 @@
 ## Вакансии
 
 <!-- LISTINGS:START -->
-**Активных: 0** · стажировок: 0 · junior: 0 · part-time: 0 · обновлено 4 октября 2026 · [JSON](data/listings.json) · [RSS](data/feed.xml)
+**Активных: 1** · стажировок: 1 · junior: 0 · part-time: 0 · обновлено 4 октября 2026 · [JSON](data/listings.json) · [RSS](data/feed.xml)
 
-> Сейчас нет активных вакансий. [Разместите первую →](../../issues/new?template=new-listing.yml)
+|   | Компания | Позиция | Тип | Где | Оплата | Дедлайн |   |
+|---|---|---|---|---|---|---|---|
+|  | **Andersen** | Trainee: JavaScript, QA, бизнес-анализ, UI/UX | Стажировка · Другое | Удалённо | — | — | [Откликнуться](https://people.andersenlab.com/trainee) |
+
+⭐ — Featured: работодатель продвигает вакансию. «—» в дедлайне — вакансия висит 45 дней или до закрытия набора.
 <!-- LISTINGS:END -->
 
 ## Студентам
