@@ -49,5 +49,22 @@
     "added": "2026-10-04",
     "expires": "2026-11-18",
     "featured_until": null
+  },
+  {
+    "id": "jj-8",
+    "issue": 8,
+    "company": "Andersen",
+    "title": "Full Stack Test Engineer Trainee",
+    "type": "Стажировка",
+    "direction": "QA",
+    "city": "Алматы",
+    "format": "Офис",
+    "paid": "Оплачиваемая",
+    "salary": "до 300 000 ₸ за месяц, до вычета налогов",
+    "url": "https://hh.kz/vacancy/137531419",
+    "deadline": null,
+    "added": "2026-10-04",
+    "expires": "2026-11-18",
+    "featured_until": null
   }
 ]
