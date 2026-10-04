@@ -61,7 +61,7 @@ flowchart LR
 | Автоматизация | [`.github/workflows/`](.github/workflows) |
 | Формы заявок | [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE) |
 | Сайт | [`site/index.html`](site/index.html) |
-| Запуск и модерация | [`docs/setup.md`](docs/setup.md) |
+| Запуск и модерация | [`docs/setup.md`](docs/setup.md), где искать вакансии — [`docs/sources.md`](docs/sources.md) |
 | Бизнес-модель | [`docs/business-model.md`](docs/business-model.md) |
 
 ## Разработчикам
