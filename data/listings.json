@@ -32,5 +32,22 @@
     "added": "2026-10-04",
     "expires": "2026-11-18",
     "featured_until": null
+  },
+  {
+    "id": "jj-7",
+    "issue": 7,
+    "company": "Andersen",
+    "title": "DevOps Trainee",
+    "type": "Стажировка",
+    "direction": "DevOps / SRE",
+    "city": "Алматы",
+    "format": "Гибрид",
+    "paid": "Оплачиваемая",
+    "salary": "300 000 ₸ за месяц, до вычета налогов",
+    "url": "https://hh.kz/vacancy/137568604",
+    "deadline": null,
+    "added": "2026-10-04",
+    "expires": "2026-11-18",
+    "featured_until": null
   }
 ]
