@@ -202,5 +202,22 @@
     "added": "2026-10-04",
     "expires": "2026-11-18",
     "featured_until": null
+  },
+  {
+    "id": "jj-6",
+    "issue": 6,
+    "company": "Itransition",
+    "title": "Intern .NET Developer",
+    "type": "Стажировка",
+    "direction": "Backend",
+    "city": "Астана",
+    "format": "Офис",
+    "paid": "Не указано",
+    "salary": "",
+    "url": "https://hh.kz/vacancy/129192272",
+    "deadline": null,
+    "added": "2026-10-05",
+    "expires": "2026-11-19",
+    "featured_until": null
   }
 ]
